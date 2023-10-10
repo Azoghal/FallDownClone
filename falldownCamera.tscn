@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpcwatpq2nba5"]
+
+[ext_resource type="Script" path="res://falldownCamera.gd" id="1_lclkf"]
+
+[sub_resource type="Gradient" id="Gradient_d1qpa"]
+colors = PackedColorArray(0, 0, 0, 1, 0.117647, 0.156863, 0.117647, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7hi55"]
+gradient = SubResource("Gradient_d1qpa")
+width = 120
+height = 90
+fill_to = Vector2(0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h23uu"]
+size = Vector2(12922, 11583)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brarl"]
+size = Vector2(3000, 684)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qdi5w"]
+size = Vector2(500, 14000)
+
+[node name="fallDownCamera" type="Camera2D"]
+zoom = Vector2(0.1, 0.1)
+script = ExtResource("1_lclkf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(200, 200)
+texture = SubResource("GradientTexture2D_7hi55")
+region_rect = Rect2(0, 0, 2000, 2000)
+
+[node name="GameArea" type="Area2D" parent="." groups=["GameArea"]]
+collision_layer = 5
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea"]
+position = Vector2(0, 192.5)
+shape = SubResource("RectangleShape2D_h23uu")
+
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2(0, -4953)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(0, -158)
+scale = Vector2(5, 1)
+shape = SubResource("RectangleShape2D_brarl")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-6500, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("RectangleShape2D_qdi5w")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(6500, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("RectangleShape2D_qdi5w")
+
+[connection signal="body_exited" from="GameArea" to="." method="_on_game_area_body_exited"]
+[connection signal="body_entered" from="DeathZone" to="." method="_on_death_zone_body_entered"]

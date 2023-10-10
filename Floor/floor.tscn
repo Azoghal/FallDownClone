@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://dtf2ydial6p1m"]
+
+[ext_resource type="Script" path="res://Floor/floor.gd" id="1_38edp"]
+[ext_resource type="Texture2D" uid="uid://rkuf8a5f663b" path="res://Assets/square end.png" id="2_7q7qo"]
+[ext_resource type="PhysicsMaterial" uid="uid://x47es0lxgy4j" path="res://highFriction.tres" id="2_yl5d8"]
+[ext_resource type="Texture2D" uid="uid://csddf8yi0c8jm" path="res://Assets/sqaure.png" id="3_3y6gi"]
+[ext_resource type="Texture2D" uid="uid://cgm8cr3c5eo6p" path="res://Assets/square middle.png" id="4_0yyv6"]
+[ext_resource type="AudioStream" uid="uid://d2t5iwokmy6xw" path="res://Assets/Sound/landSound.wav" id="6_xmwma"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nglub"]
+size = Vector2(500, 500)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jskxf"]
+size = Vector2(20, 9.89286)
+
+[node name="Floor2" type="Node2D" groups=["floors"]]
+script = ExtResource("1_38edp")
+width = 7
+
+[node name="Holder" type="Node2D" parent="." groups=["floors"]]
+
+[node name="StaticFloor" type="StaticBody2D" parent="Holder" groups=["floors"]]
+position = Vector2(1500, 0)
+scale = Vector2(7, 1)
+collision_mask = 2
+physics_material_override = ExtResource("2_yl5d8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Holder/StaticFloor" groups=["floors"]]
+shape = SubResource("RectangleShape2D_nglub")
+
+[node name="TopArea" type="Area2D" parent="Holder/StaticFloor" groups=["floors"]]
+position = Vector2(0, 3)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Holder/StaticFloor/TopArea" groups=["floors"]]
+position = Vector2(0, -141.5)
+scale = Vector2(25, 28)
+shape = SubResource("RectangleShape2D_jskxf")
+
+[node name="Left" type="Sprite2D" parent="Holder"]
+texture = ExtResource("2_7q7qo")
+flip_h = true
+
+[node name="Stubby" type="Sprite2D" parent="Holder"]
+visible = false
+texture = ExtResource("3_3y6gi")
+flip_h = true
+
+[node name="Middle" type="Sprite2D" parent="Holder"]
+position = Vector2(1500, 0)
+scale = Vector2(5, 1)
+texture = ExtResource("4_0yyv6")
+
+[node name="Right" type="Sprite2D" parent="Holder"]
+position = Vector2(3000, 0)
+texture = ExtResource("2_7q7qo")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_xmwma")
+volume_db = -18.0
+bus = &"SFX"
+
+[connection signal="landedOn" from="." to="." method="_on_landed_on"]
+[connection signal="body_entered" from="Holder/StaticFloor/TopArea" to="." method="_on_top_area_body_entered"]

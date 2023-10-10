@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://h4ed37lei0kq"]
+
+[ext_resource type="Script" path="res://Gameover.gd" id="1_200jl"]
+[ext_resource type="LabelSettings" uid="uid://c31h8x47r1rva" path="res://new_label_settings.tres" id="2_toeso"]
+[ext_resource type="LabelSettings" uid="uid://c4ui44j1luq80" path="res://menu_title.tres" id="3_ffriw"]
+
+[node name="Gameover" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_200jl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -107.5
+offset_top = -95.0
+offset_right = 107.5
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Gameover" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Game Over"
+label_settings = ExtResource("2_toeso")
+horizontal_alignment = 1
+
+[node name="Score" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "77"
+label_settings = ExtResource("3_ffriw")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Restart" type="Button" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Main Menu" type="Button" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="button_down" from="VBoxContainer/VBoxContainer/Restart" to="." method="_on_restart_button_down"]
+[connection signal="button_down" from="VBoxContainer/VBoxContainer/HBoxContainer/Main Menu" to="." method="_on_main_menu_button_down"]
+[connection signal="button_down" from="VBoxContainer/VBoxContainer/HBoxContainer/Quit" to="." method="_on_quit_button_down"]

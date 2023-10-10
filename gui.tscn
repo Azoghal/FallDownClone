@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://dq81qqad2fm37"]
+
+[ext_resource type="Script" path="res://gui.gd" id="1_qg5yk"]
+[ext_resource type="LabelSettings" uid="uid://c31h8x47r1rva" path="res://new_label_settings.tres" id="1_uyxcd"]
+
+[node name="GUI" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_qg5yk")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="score" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_uyxcd")
+horizontal_alignment = 2
+
+[node name="time" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_uyxcd")
+horizontal_alignment = 2
+
+[node name="Timer" type="Timer" parent="MarginContainer/VBoxContainer/time"]
+autostart = true
+
+[connection signal="timeout" from="MarginContainer/VBoxContainer/time/Timer" to="." method="_on_timer_timeout"]

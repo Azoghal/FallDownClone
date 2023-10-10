@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://ewon4i266awy"]
+
+[ext_resource type="Script" path="res://gameWorld.gd" id="1_p5vfj"]
+[ext_resource type="AudioStream" uid="uid://ckvc2fhgxim5l" path="res://Assets/Sound/bgMusic.wav" id="2_2vaqg"]
+[ext_resource type="PackedScene" uid="uid://dq81qqad2fm37" path="res://gui.tscn" id="3_yu6ln"]
+[ext_resource type="PackedScene" uid="uid://b674n40n8xjw2" path="res://pause.tscn" id="4_6t4x8"]
+[ext_resource type="PackedScene" uid="uid://h4ed37lei0kq" path="res://gameover.tscn" id="5_dbpee"]
+
+[node name="Main" type="Node"]
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("1_p5vfj")
+
+[node name="PlayerSpawn" type="Node2D" parent="World"]
+position = Vector2(0, -4349)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="World"]
+stream = ExtResource("2_2vaqg")
+volume_db = -25.0
+autoplay = true
+bus = &"Music"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" parent="CanvasLayer" instance=ExtResource("3_yu6ln")]
+
+[node name="pause" parent="CanvasLayer" instance=ExtResource("4_6t4x8")]
+visible = false
+
+[node name="Gameover" parent="CanvasLayer" instance=ExtResource("5_dbpee")]
+visible = false
+
+[connection signal="finished" from="World/AudioStreamPlayer" to="World" method="_on_audio_stream_player_2d_finished"]

@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://g8o12xdpqrr4"]
+
+[ext_resource type="Texture2D" uid="uid://duhn3gsmxhe2d" path="res://Assets/ball.png" id="1_lor4q"]
+[ext_resource type="Script" path="res://player.gd" id="1_nwqah"]
+[ext_resource type="PhysicsMaterial" uid="uid://x47es0lxgy4j" path="res://highFriction.tres" id="1_s6pqr"]
+[ext_resource type="AudioStream" uid="uid://cnsey5e1rn6pq" path="res://Assets/Sound/negLong.wav" id="4_3fq24"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ncu0k"]
+
+[node name="player" type="RigidBody2D" groups=["player"]]
+z_index = 5
+collision_layer = 2
+physics_material_override = ExtResource("1_s6pqr")
+gravity_scale = 20.0
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("1_nwqah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
+scale = Vector2(25, 25)
+shape = SubResource("CircleShape2D_ncu0k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lor4q")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3fq24")
+volume_db = -20.0
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
